@@ -18,7 +18,8 @@ p {
     margin-left: 300px;
 }
 t{
-    color: #000000;
+    <!-- title -->
+    color: #384d35;
     font-size: 40px;
 }
 span{
