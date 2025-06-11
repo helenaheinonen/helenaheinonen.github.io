@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Helena Heinonen</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <t> Helena Heinonen</t>
+    <br>
+    <a href="./index.html">home</a>
+    <span>·</span>
+    <a href="./pantry.html">pantry</a>
+    <span>.</span>
+    <a href="./research.html">research</a>
+    <span>.</span>
+    <a href="./crosswords">crosswords</a>
+    <span>.</span>
+    <a href="./montreal">montreal</a>
+
+    <br><br><br>
+
+    <!-- Restaurant Table Section Starts Here -->
+    <h1>Montreal Restaurant Recommendations</h1>
+    <input type="text" id="searchInput" placeholder="Search restaurants...">
+
+    <table id="restaurantTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Name</th>
+          <th onclick="sortTable(1)">Neighborhood</th>
+          <th onclick="sortTable(2)">Cuisine</th>
+          <th onclick="sortTable(3)">Price</th>
+          <th onclick="sortTable(4)">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+        <!-- Pho Bac -->    
+          <td data-label="Name">Pho Bac</td>
+          <td data-label="Neighborhood">China Town</td>
+          <td data-label="Cuisine">Vietnamese</td>
+          <td data-label="Price">$</td>
+          <td data-label="Notes">n/a</td>
+        </tr>
+        <tr>
+          <td data-label="Name">Schwartz’s</td>
+          <td data-label="Neighborhood">Plateau</td>
+          <td data-label="Cuisine">Deli</td>
+          <td data-label="Price">$</td>
+        </tr>
+        <tr>
+          <td data-label="Name">Damas</td>
+          <td data-label="Neighborhood">Outremont</td>
+          <td data-label="Cuisine">Syrian</td>
+          <td data-label="Price">$$$</td>
+        </tr>
+        
+      </tbody>
+    </table>
+    <!--  Restaurant Table Section Ends Here -->
+
+    <script>
+      // Filter
+      document.getElementById('searchInput').addEventListener('keyup', function () {
+        const filter = this.value.toUpperCase();
+        const rows = document.querySelector("#restaurantTable tbody").rows;
+        
+        for (let row of rows) {
+          let match = false;
+          for (let cell of row.cells) {
+            if (cell.textContent.toUpperCase().indexOf(filter) > -1) {
+              match = true;
+              break;
+            }
+          }
+          row.style.display = match ? "" : "none";
+        }
+      });
+
+      // Sort
+      function sortTable(columnIndex) {
+        const table = document.getElementById("restaurantTable");
+        const tbody = table.tBodies[0];
+        const rows = Array.from(tbody.querySelectorAll("tr"));
+        const asc = !table.dataset.sortAsc || table.dataset.sortColumn != columnIndex;
+
+        rows.sort((a, b) => {
+          const aText = a.cells[columnIndex].textContent.trim();
+          const bText = b.cells[columnIndex].textContent.trim();
+          return asc ? aText.localeCompare(bText) : bText.localeCompare(aText);
+        });
+
+        rows.forEach(row => tbody.appendChild(row));
+
+        table.dataset.sortAsc = asc;
+        table.dataset.sortColumn = columnIndex;
+      }
+    </script>
+  </body>
+</html>
